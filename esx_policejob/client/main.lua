@@ -91,8 +91,6 @@ function OpenCloakroomMenu()
 
 	table.insert(elements, { label = 'Replenish Armor', value = 'armour' })
 	table.insert(elements, { label = _U('citizen_wear'), value = 'citizen_wear' })
-	--table.insert(elements, { label = _U('bullet_wear'), value = 'bullet_wear' })
-	--table.insert(elements, { label = _U('gilet_wear'), value = 'gilet_wear' })
 
 	if grade == 'recruit' then
 		table.insert(elements, {label = _U('police_wear'), value = 'recruit_wear'})
@@ -116,10 +114,6 @@ function OpenCloakroomMenu()
 		table.insert(elements, {label = 'Swat wear', value = 'freemode_ped', maleModel = 's_m_y_swat_01', femaleModel = 's_m_y_swat_01'})
 	end
 
-	--[[table.insert(elements, { -- EUP
-		label = 'Police Outfits',
-		value = 'police_outfits'
-	})]]
 
 	ESX.UI.Menu.CloseAll()
 
@@ -172,9 +166,7 @@ function OpenCloakroomMenu()
 					end
 				end, 'police')
 			end
-		--elseif data.current.value == 'police_outfits' then
-		--	menu.close()
-		--	TriggerEvent('eup-ui:openMenu')
+
 		elseif data.current.value == 'armour' then
 			SetPedArmour(playerPed, 100)
 		end
@@ -464,7 +456,6 @@ function StoreNearbyVehicle(playerCoords)
 
 	if #vehicles > 0 then
 		for k,v in ipairs(vehicles) do
-			-- Make sure the vehicle we're saving is empty, or else it wont be deleted
 			if GetVehicleNumberOfPassengers(v) == 0 and IsVehicleSeatFree(v, -1) then
 				table.insert(vehiclePlates, {
 					vehicle = v,
@@ -711,8 +702,7 @@ function OpenPoliceActionsMenu()
 				{label = _U('put_in_vehicle'),	value = 'put_in_vehicle'},
 				{label = _U('out_the_vehicle'),	value = 'out_the_vehicle'},
 				{label = _U('fine'),			value = 'fine'},
-				{label = _U('unpaid_bills'),	value = 'unpaid_bills'},
-				{label = 'Criminal Records',  	value = 'criminalrecords'}
+				{label = _U('unpaid_bills'),	value = 'unpaid_bills'}
 			}
 
 			if Config.EnableLicenses then
@@ -842,9 +832,6 @@ function OpenPoliceActionsMenu()
 						ShowPlayerLicense(closestPlayer)
 					elseif action == 'unpaid_bills' then
 						OpenUnpaidBillsMenu(closestPlayer)
-					elseif action == 'criminalrecords' then
-						OpenCriminalRecords(closestPlayer)
-					end
 
 				else
 					ESX.ShowNotification(_U('no_players_nearby'))
@@ -893,7 +880,6 @@ function OpenPoliceActionsMenu()
 							ESX.ShowNotification(_U('vehicle_unlocked'))
 						end
 					elseif data2.current.value == 'impound' then
-						-- is the script busy?
 						if CurrentTask.Busy then
 							return
 						end
@@ -909,7 +895,6 @@ function OpenPoliceActionsMenu()
 							Citizen.Wait(100) -- sleep the entire script to let stuff sink back to reality
 						end)
 
-						-- keep track of that vehicle!
 						Citizen.CreateThread(function()
 							while CurrentTask.Busy do
 								Citizen.Wait(1000)
@@ -2018,19 +2003,12 @@ Citizen.CreateThread(function()
 		local playerPed = PlayerPedId()
 
 		if IsHandcuffed then
-			--DisableControlAction(0, 1, true) -- Disable pan
 			DisableControlAction(0, 2, true) -- Disable tilt
 			DisableControlAction(0, 24, true) -- Attack
 			DisableControlAction(0, 257, true) -- Attack 2
 			DisableControlAction(0, 25, true) -- Aim
 			DisableControlAction(0, 263, true) -- Melee Attack 1
-			--DisableControlAction(0, 32, true) -- W
-			--DisableControlAction(0, 34, true) -- A
-			--DisableControlAction(0, 31, true) -- S
-			--DisableControlAction(0, 30, true) -- D
-
 			DisableControlAction(0, 45, true) -- Reload
-			--DisableControlAction(0, 22, true) -- Jump
 			DisableControlAction(0, 44, true) -- Cover
 			DisableControlAction(0, 37, true) -- Select Weapon
 			DisableControlAction(0, 23, true) -- Also 'enter'?
@@ -2043,14 +2021,8 @@ Citizen.CreateThread(function()
 			DisableControlAction(0, 0, true) -- Disable changing view
 			DisableControlAction(0, 26, true) -- Disable looking behind
 			DisableControlAction(0, 73, true) -- Disable clearing animation
-			DisableControlAction(2, 199, true) -- Disable pause screen
 
 			DisableControlAction(0, 59, true) -- Disable steering in vehicle
-			DisableControlAction(0, 71, true) -- Disable driving forward in vehicle
-			DisableControlAction(0, 72, true) -- Disable reversing in vehicle
-
-			DisableControlAction(2, 36, true) -- Disable going stealth
-
 			DisableControlAction(0, 47, true)  -- Disable weapon
 			DisableControlAction(0, 264, true) -- Disable melee
 			DisableControlAction(0, 257, true) -- Disable melee
