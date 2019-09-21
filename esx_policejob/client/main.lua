@@ -2012,28 +2012,13 @@ Citizen.CreateThread(function()
 			DisableControlAction(0, 44, true) -- Cover
 			DisableControlAction(0, 37, true) -- Select Weapon
 			DisableControlAction(0, 23, true) -- Also 'enter'?
-
 			DisableControlAction(0, 288,  true) -- Disable phone
 			DisableControlAction(0, 289, true) -- Inventory
 			DisableControlAction(0, 170, true) -- Animations
 			DisableControlAction(0, 167, true) -- Job
-
-			DisableControlAction(0, 0, true) -- Disable changing view
-			DisableControlAction(0, 26, true) -- Disable looking behind
 			DisableControlAction(0, 73, true) -- Disable clearing animation
-
 			DisableControlAction(0, 59, true) -- Disable steering in vehicle
 			DisableControlAction(0, 47, true)  -- Disable weapon
-			DisableControlAction(0, 264, true) -- Disable melee
-			DisableControlAction(0, 257, true) -- Disable melee
-			DisableControlAction(0, 140, true) -- Disable melee
-			DisableControlAction(0, 141, true) -- Disable melee
-			DisableControlAction(0, 142, true) -- Disable melee
-			DisableControlAction(0, 143, true) -- Disable melee
-			DisableControlAction(0, 75, true)  -- Disable exit vehicle
-			DisableControlAction(27, 75, true) -- Disable exit vehicle
-
-			DisableControlAction(0, 20, true) -- Z
 
 			if IsEntityPlayingAnim(playerPed, 'mp_arresting', 'idle', 3) ~= 1 then
 				ESX.Streaming.RequestAnimDict('mp_arresting', function()
