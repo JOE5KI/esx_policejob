@@ -81,70 +81,72 @@ Config.PoliceStations = {
 
 Config.AuthorizedWeapons = {
 	recruit = {
-		{ weapon = 'WEAPON_APPISTOL', components = { 0, 0, 1000, 4000, nil }, price = 10000 },
+		{ weapon = 'WEAPON_APPISTOL', components = { 0, 0, 1000, 4000, nil }, price = 1 },
 		{ weapon = 'WEAPON_NIGHTSTICK', price = 0 },
-		{ weapon = 'WEAPON_STUNGUN', price = 1500 },
+		{ weapon = 'WEAPON_STUNGUN', price = 1 },
 		{ weapon = 'WEAPON_FLASHLIGHT', price = 80 }
 	},
 
 	officer = {
-		{ weapon = 'WEAPON_APPISTOL', components = { 0, 0, 1000, 4000, nil }, price = 10000 },
-		{ weapon = 'WEAPON_ADVANCEDRIFLE', components = { 0, 6000, 1000, 4000, 8000, nil }, price = 50000 },
+		{ weapon = 'WEAPON_APPISTOL', components = { 0, 0, 1000, 4000, nil }, price = 1 },
+		{ weapon = 'WEAPON_ADVANCEDRIFLE', components = { 0, 6000, 1000, 4000, 8000, nil }, price = 1 },
 		{ weapon = 'WEAPON_NIGHTSTICK', price = 0 },
-		{ weapon = 'WEAPON_STUNGUN', price = 500 },
+		{ weapon = 'WEAPON_STUNGUN', price = 1 },
 		{ weapon = 'WEAPON_FLASHLIGHT', price = 0 }
 	},
 
 	sergeant = {
-		{ weapon = 'WEAPON_APPISTOL', components = { 0, 0, 1000, 4000, nil }, price = 10000 },
-		{ weapon = 'WEAPON_ADVANCEDRIFLE', components = { 0, 6000, 1000, 4000, 8000, nil }, price = 50000 },
-		{ weapon = 'WEAPON_PUMPSHOTGUN', components = { 2000, 6000, nil }, price = 70000 },
+		{ weapon = 'WEAPON_APPISTOL', components = { 0, 0, 1000, 4000, nil }, price = 1 },
+		{ weapon = 'WEAPON_ADVANCEDRIFLE', components = { 0, 6000, 1000, 4000, 8000, nil }, price = 1 },
+		{ weapon = 'WEAPON_PUMPSHOTGUN', components = { 2000, 6000, nil }, price = 1 },
 		{ weapon = 'WEAPON_NIGHTSTICK', price = 0 },
-		{ weapon = 'WEAPON_STUNGUN', price = 500 },
+		{ weapon = 'WEAPON_STUNGUN', price = 1 },
 		{ weapon = 'WEAPON_FLASHLIGHT', price = 0 }
 	},
 
 	intendent = {
-		{ weapon = 'WEAPON_APPISTOL', components = { 0, 0, 1000, 4000, nil }, price = 10000 },
-		{ weapon = 'WEAPON_ADVANCEDRIFLE', components = { 0, 6000, 1000, 4000, 8000, nil }, price = 50000 },
-		{ weapon = 'WEAPON_PUMPSHOTGUN', components = { 2000, 6000, nil }, price = 70000 },
+		{ weapon = 'WEAPON_APPISTOL', components = { 0, 0, 1000, 4000, nil }, price = 1 },
+		{ weapon = 'WEAPON_ADVANCEDRIFLE', components = { 0, 6000, 1000, 4000, 8000, nil }, price = 1 },
+		{ weapon = 'WEAPON_PUMPSHOTGUN', components = { 2000, 6000, nil }, price = 1 },
 		{ weapon = 'WEAPON_NIGHTSTICK', price = 0 },
-		{ weapon = 'WEAPON_STUNGUN', price = 500 },
+		{ weapon = 'WEAPON_STUNGUN', price = 1 },
 		{ weapon = 'WEAPON_FLASHLIGHT', price = 0 }
 	},
 
 	lieutenant = {
-		{ weapon = 'WEAPON_APPISTOL', components = { 0, 0, 1000, 4000, nil }, price = 10000 },
-		{ weapon = 'WEAPON_ADVANCEDRIFLE', components = { 0, 6000, 1000, 4000, 8000, nil }, price = 50000 },
-		{ weapon = 'WEAPON_PUMPSHOTGUN', components = { 2000, 6000, nil }, price = 70000 },
+		{ weapon = 'WEAPON_APPISTOL', components = { 0, 0, 1000, 4000, nil }, price = 1 },
+		{ weapon = 'WEAPON_ADVANCEDRIFLE', components = { 0, 6000, 1000, 4000, 8000, nil }, price = 1 },
+		{ weapon = 'WEAPON_PUMPSHOTGUN', components = { 2000, 6000, nil }, price = 1 },
 		{ weapon = 'WEAPON_NIGHTSTICK', price = 0 },
-		{ weapon = 'WEAPON_STUNGUN', price = 500 },
+		{ weapon = 'WEAPON_STUNGUN', price = 1 },
 		{ weapon = 'WEAPON_FLASHLIGHT', price = 0 }
 	},
 
 	chef = {
-		{ weapon = 'WEAPON_APPISTOL', components = { 0, 0, 1000, 4000, nil }, price = 10000 },
-		{ weapon = 'WEAPON_ADVANCEDRIFLE', components = { 0, 6000, 1000, 4000, 8000, nil }, price = 50000 },
-		{ weapon = 'WEAPON_PUMPSHOTGUN', components = { 2000, 6000, nil }, price = 70000 },
+		{ weapon = 'WEAPON_APPISTOL', components = { 0, 0, 1000, 4000, nil }, price = 1 },
+		{ weapon = 'WEAPON_ADVANCEDRIFLE', components = { 0, 6000, 1000, 4000, 8000, nil }, price = 1 },
+		{ weapon = 'WEAPON_PUMPSHOTGUN', components = { 2000, 6000, nil }, price = 1 },
 		{ weapon = 'WEAPON_NIGHTSTICK', price = 0 },
-		{ weapon = 'WEAPON_STUNGUN', price = 500 },
+		{ weapon = 'WEAPON_STUNGUN', price = 1 },
 		{ weapon = 'WEAPON_FLASHLIGHT', price = 0 }
 	},
 
 	boss = {
-		{ weapon = 'WEAPON_APPISTOL', components = { 0, 0, 1000, 4000, nil }, price = 10000 },
-		{ weapon = 'WEAPON_ADVANCEDRIFLE', components = { 0, 6000, 1000, 4000, 8000, nil }, price = 50000 },
-		{ weapon = 'WEAPON_PUMPSHOTGUN', components = { 2000, 6000, nil }, price = 70000 },
+		{ weapon = 'WEAPON_APPISTOL', components = { 0, 0, 1000, 4000, nil }, price = 1 },
+		{ weapon = 'WEAPON_ADVANCEDRIFLE', components = { 0, 6000, 1000, 4000, 8000, nil }, price = 1 },
+		{ weapon = 'WEAPON_PUMPSHOTGUN', components = { 2000, 6000, nil }, price = 1 },
 		{ weapon = 'WEAPON_NIGHTSTICK', price = 0 },
-		{ weapon = 'WEAPON_STUNGUN', price = 500 },
+		{ weapon = 'WEAPON_STUNGUN', price = 1 },
 		{ weapon = 'WEAPON_FLASHLIGHT', price = 0 }
 	}
 }
 
 Config.AuthorizedVehicles = {
 	Shared = {
-		{ model = 'police', label = 'Police Cruiser', price = 10000 },
-		{ model = 'pbus', label = 'Police Prison Bus', price = 5000 }
+		{ model = 'police', label = 'Police Cruiser', price = 1 },
+		{ model = 'pbus', label = 'Police Prison Bus', price = 1 },
+		{ model = 'police3', label = 'Police Interceptor', price = 1 },
+		{ model = 'policeb', label = 'Police Bike', price = 1 },
 	},
 
 	recruit = {
@@ -152,12 +154,12 @@ Config.AuthorizedVehicles = {
 	},
 
 	officer = {
-		{ model = 'police3', label = 'Police Interceptor', price = 20000 }
+		{ model = 'police3', label = 'Police Interceptor', price = 1 }
 	},
 
 	sergeant = {
-		{ model = 'policet', label = 'Police Transporter', price = 18500 },
-		{ model = 'policeb', label = 'Police Bike', price = 30500 }
+		{ model = 'policet', label = 'Police Transporter', price = 1 },
+		{ model = 'policeb', label = 'Police Bike', price = 1 }
 	},
 
 	intendent = {
@@ -165,8 +167,8 @@ Config.AuthorizedVehicles = {
 	},
 
 	lieutenant = {
-		{ model = 'riot', label = 'Police Riot', price = 70000 },
-		{ model = 'fbi2', label = 'FIB SUV', price = 60000 }
+		{ model = 'riot', label = 'Police Riot', price = 1 },
+		{ model = 'fbi2', label = 'FIB SUV', price = 1 }
 	},
 
 	chef = {
