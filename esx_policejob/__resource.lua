@@ -37,5 +37,5 @@ client_scripts {
 
 dependencies {
 	'es_extended',
-	'FiredUp-Billing'
+	'esx_billing'
 }
