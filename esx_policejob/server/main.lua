@@ -483,7 +483,6 @@ ESX.RegisterServerCallback('esx_policejob:buyJobVehicle', function(source, cb, v
 	else
 		cb(false)
 	end
-end
 end)
 
 ESX.RegisterServerCallback('esx_policejob:storeNearbyVehicle', function(source, cb, nearbyVehicles)
