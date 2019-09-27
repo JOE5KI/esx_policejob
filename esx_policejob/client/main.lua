@@ -540,38 +540,52 @@ end
 
 function OpenShopMenu(elements, restoreCoords, shopCoords)
 	local playerPed = PlayerPedId()
-	TriggerEvent("rrp_vehremover:pauseVehicleRemoval")
 	isInShopMenu = true
 
 	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'vehicle_shop', {
 		title    = _U('vehicleshop_title'),
-		align = 'bottom-right',
+		align    = 'top-left',
 		elements = elements
 	}, function(data, menu)
-		local newPlate = exports['esx_vehicleshop']:GeneratePlate()
-		local vehicle  = GetVehiclePedIsIn(playerPed, false)
-		local props    = ESX.Game.GetVehicleProperties(vehicle)
-		props.plate    = newPlate
+		ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'vehicle_shop_confirm', {
+			title    = _U('vehicleshop_confirm', data.current.name, data.current.price),
+			align    = 'top-left',
+			elements = {
+				{label = _U('confirm_no'), value = 'no'},
+				{label = _U('confirm_yes'), value = 'yes'}
+		}}, function(data2, menu2)
+			if data2.current.value == 'yes' then
+				local newPlate = exports['esx_vehicleshop']:GeneratePlate()
+				local vehicle  = GetVehiclePedIsIn(playerPed, false)
+				local props    = ESX.Game.GetVehicleProperties(vehicle)
+				props.plate    = newPlate
 
-		ESX.TriggerServerCallback('esx_policejob:buyJobVehicle', function (bought)
-			if bought then
-				ESX.ShowNotification(_U('vehicleshop_bought'))
-				TriggerEvent("rrp_vehremover:resumeVehicleRemoval")
-				isInShopMenu = false
-				ESX.UI.Menu.CloseAll()
-				DeleteSpawnedVehicles()
-				FreezeEntityPosition(playerPed, false)
-				SetEntityVisible(playerPed, true)
-				ESX.Game.Teleport(playerPed, restoreCoords)
+				ESX.TriggerServerCallback('esx_policejob:buyJobVehicle', function (bought)
+					if bought then
+						ESX.ShowNotification(_U('vehicleshop_bought', data.current.name, ESX.Math.GroupDigits(data.current.price)))
+
+						isInShopMenu = false
+						ESX.UI.Menu.CloseAll()
+						DeleteSpawnedVehicles()
+						FreezeEntityPosition(playerPed, false)
+						SetEntityVisible(playerPed, true)
+
+						ESX.Game.Teleport(playerPed, restoreCoords)
+					else
+						ESX.ShowNotification(_U('vehicleshop_money'))
+						menu2.close()
+					end
+				end, props, data.current.type)
 			else
-				ESX.ShowNotification(_U('vehicleshop_money'))
 				menu2.close()
 			end
-		end, props, data.current.type)
+		end, function(data2, menu2)
+			menu2.close()
+		end)
 	end, function(data, menu)
-		TriggerEvent("rrp_vehremover:resumeVehicleRemoval")
 		isInShopMenu = false
 		ESX.UI.Menu.CloseAll()
+
 		DeleteSpawnedVehicles()
 		FreezeEntityPosition(playerPed, false)
 		SetEntityVisible(playerPed, true)
@@ -579,23 +593,19 @@ function OpenShopMenu(elements, restoreCoords, shopCoords)
 		ESX.Game.Teleport(playerPed, restoreCoords)
 	end, function(data, menu)
 		DeleteSpawnedVehicles()
-
 		WaitForVehicleToLoad(data.current.model)
-		ESX.Game.SpawnLocalVehicle(
-			data.current.model,
-			shopCoords,
-			0.0,
-			function(vehicle)
-				table.insert(spawnedVehicles, vehicle)
-				TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
-				FreezeEntityPosition(vehicle, true)
 
-				if data.current.livery then
-					ESX.Game.RequestNetControl(vehicle)
-					SetVehicleModKit(vehicle, 0)
-					SetVehicleLivery(vehicle, data.current.livery)
-				end
-			end)
+		ESX.Game.SpawnLocalVehicle(data.current.model, shopCoords, 0.0, function(vehicle)
+			table.insert(spawnedVehicles, vehicle)
+			TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
+			FreezeEntityPosition(vehicle, true)
+			SetModelAsNoLongerNeeded(data.current.model)
+
+			if data.current.livery then
+				SetVehicleModKit(vehicle, 0)
+				SetVehicleLivery(vehicle, data.current.livery)
+			end
+		end)
 	end)
 
 	WaitForVehicleToLoad(elements[1].model)
@@ -603,11 +613,11 @@ function OpenShopMenu(elements, restoreCoords, shopCoords)
 		table.insert(spawnedVehicles, vehicle)
 		TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
 		FreezeEntityPosition(vehicle, true)
+		SetModelAsNoLongerNeeded(elements[1].model)
 
 		if elements[1].livery then
-			ESX.Game.RequestNetControl(vehicle)
 			SetVehicleModKit(vehicle, 0)
-			SetVehicleLivery(vehicle,elements[1].livery)
+			SetVehicleLivery(vehicle, elements[1].livery)
 		end
 	end)
 end
@@ -973,6 +983,15 @@ RegisterCommand("cuff", function(source, args, raw)
 		end
 	end
 end, false)
+
+
+AddEventHandler('esx_billing:sendBill', function(playerId, sharedAccountName, label, amount)
+RegisterCommand("bill", function(playerId, amount))
+	if PlayerData.job.name == 'police' then
+		
+
+
+
 
 RegisterCommand("loosen", function(source, args, raw)
 	if PlayerData.job.name == 'police' then
@@ -1894,6 +1913,7 @@ AddEventHandler('esx_policejob:putInVehicle', function()
 
 		if DoesEntityExist(vehicle) then
 			local maxSeats, freeSeat = GetVehicleMaxNumberOfPassengers(vehicle)
+			local seatfree, freeSeat = GetVehicleMaxNumberOfPassengers(vehicle)
 
 			for i=maxSeats - 1, 0, -1 do
 				if IsVehicleSeatFree(vehicle, i) then
@@ -1901,7 +1921,13 @@ AddEventHandler('esx_policejob:putInVehicle', function()
 					break
 				end
 			end
-
+			for i=seatfree - 1, 0, -2 do
+				if IsVehicleSeatFree(vehicle, i) then
+					freeSeat = i
+					break
+				end
+			end
+			
 			if freeSeat then
 				TaskWarpPedIntoVehicle(playerPed, vehicle, freeSeat)
 				DragStatus.IsDragged = false

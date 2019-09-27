@@ -89,7 +89,6 @@ AddEventHandler('esx_policejob:handcuff', function(target)
 	local xPlayer = ESX.GetPlayerFromId(source)
 
 	if xPlayer.job.name == 'police' or xPlayer.job.name == 'ambulance' then
-		TriggerClientEvent('rrp_lockpick:cancel', target)
 		TriggerClientEvent('esx_policejob:handcuff', target)
 	else
 		print(('esx_policejob: %s attempted to handcuff a player (not cop)!'):format(xPlayer.identifier))
@@ -101,7 +100,6 @@ AddEventHandler('esx_policejob:drag', function(target)
 	local xPlayer = ESX.GetPlayerFromId(source)
 
 	if xPlayer.job.name == 'police' then
-		TriggerClientEvent('rrp_lockpick:cancel', target)
 		TriggerClientEvent('esx_policejob:drag', target, source)
 	else
 		print(('esx_policejob: %s attempted to drag (not cop)!'):format(xPlayer.identifier))
@@ -113,7 +111,6 @@ AddEventHandler('esx_policejob:putInVehicle', function(target)
 	local xPlayer = ESX.GetPlayerFromId(source)
 
 	if xPlayer.job.name == 'police' then
-		TriggerClientEvent('rrp_lockpick:cancel', target)
 		TriggerClientEvent('esx_policejob:putInVehicle', target)
 	else
 		print(('esx_policejob: %s attempted to put in vehicle (not cop)!'):format(xPlayer.identifier))
@@ -481,14 +478,12 @@ ESX.RegisterServerCallback('esx_policejob:buyJobVehicle', function(source, cb, v
 			['@stored'] = true,
 			['@vehiclename'] = ESX.GetVehicleNameByHashId(vehicleProps.model)
 		}, function (rowsChanged)
-
-			TriggerEvent("rrp_vehremover:newPlate", vehicleProps.plate)
-
 			cb(true)
 		end)
 	else
 		cb(false)
 	end
+end
 end)
 
 ESX.RegisterServerCallback('esx_policejob:storeNearbyVehicle', function(source, cb, nearbyVehicles)
