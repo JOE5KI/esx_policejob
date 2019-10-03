@@ -16,3 +16,6 @@ Adds Commands:
 
 Added but not tested:
 Putting Multiple People in Vehicle
+
+
+Any Bug reports please make a ticket on discord: https://discord.gg/4jxzvCH
