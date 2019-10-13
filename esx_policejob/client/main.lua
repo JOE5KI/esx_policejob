@@ -1524,91 +1524,6 @@ AddEventHandler('esx_policejob:hardcuff', function()
 	end)
 end)
 
-RegisterNetEvent('esx_policejob:getarrested')
-AddEventHandler('esx_policejob:getarrested', function(playerheading, playercoords, playerlocation)
-	playerPed = GetPlayerPed(-1)
-	SetCurrentPedWeapon(playerPed, GetHashKey('WEAPON_UNARMED'), true) -- unarm player
-	local x, y, z   = table.unpack(playercoords + playerlocation * 1.0)
-	SetEntityCoords(GetPlayerPed(-1), x, y, z)
-	SetEntityHeading(GetPlayerPed(-1), playerheading)
-	Citizen.Wait(250)
-	LoadAnimDict('mp_arrest_paired')
-	TaskPlayAnim(GetPlayerPed(-1), 'mp_arrest_paired', 'crook_p2_back_right', 8.0, -8, 3750 , 2, 0, 0, 0, 0)
-	Citizen.Wait(3760)
-	IsHandcuffed = true
-	IsShackles = false
-	TriggerEvent('esx_policejob:handcuff')
-	LoadAnimDict('mp_arresting')
-	TaskPlayAnim(GetPlayerPed(-1), 'mp_arresting', 'idle', 8.0, -8, -1, 49, 0.0, false, false, false)
-end)
-
-
-RegisterNetEvent('esx_policejob:doarrested')
-AddEventHandler('esx_policejob:doarrested', function()
-	Citizen.Wait(250)
-	LoadAnimDict('mp_arrest_paired')
-	TaskPlayAnim(GetPlayerPed(-1), 'mp_arrest_paired', 'cop_p2_back_right', 8.0, -8,3750, 2, 0, 0, 0, 0)
-	Citizen.Wait(3000)
-
-end) 
-
-RegisterNetEvent('esx_policejob:douncuffing')
-AddEventHandler('esx_policejob:douncuffing', function()
-	Citizen.Wait(250)
-	LoadAnimDict('mp_arresting')
-	TaskPlayAnim(GetPlayerPed(-1), 'mp_arresting', 'a_uncuff', 8.0, -8,-1, 2, 0, 0, 0, 0)
-	Citizen.Wait(5500)
-	ClearPedTasks(GetPlayerPed(-1))
-end)
-
-RegisterNetEvent('esx_policejob:getuncuffed')
-AddEventHandler('esx_policejob:getuncuffed', function(playerheading, playercoords, playerlocation)
-	local x, y, z   = table.unpack(playercoords + playerlocation * 1.0)
-	SetEntityCoords(GetPlayerPed(-1), x, y, z)
-	SetEntityHeading(GetPlayerPed(-1), playerheading)
-	Citizen.Wait(250)
-	LoadAnimDict('mp_arresting')
-	TaskPlayAnim(GetPlayerPed(-1), 'mp_arresting', 'b_uncuff', 8.0, -8,-1, 2, 0, 0, 0, 0)
-	Citizen.Wait(5500)
-	IsHandcuffed = false
-	IsShackles = false
-	TriggerEvent('esx_policejob:handcuff')
-	ClearPedTasks(GetPlayerPed(-1))
-end)
-
-RegisterNetEvent('esx_policejob:loose')
-AddEventHandler('esx_policejob:loose', function(playerheading, playercoords, playerlocation)
-	local x, y, z   = table.unpack(playercoords + playerlocation * 1.0)
-	SetEntityCoords(GetPlayerPed(-1), x, y, z)
-	SetEntityHeading(GetPlayerPed(-1), playerheading)
-	Citizen.Wait(250)
-	LoadAnimDict('mp_arresting')
-	TaskPlayAnim(GetPlayerPed(-1), 'mp_arresting', 'b_uncuff', 8.0, -8,-1, 2, 0, 0, 0, 0)
-	Citizen.Wait(5500)
-	IsHandcuffed = true
-	IsShackles = false
-	TriggerEvent('esx_policejob:handcuff')
-	ClearPedTasks(GetPlayerPed(-1))
-end)
-
-RegisterNetEvent('esx_policejob:getarrestedhard')
-AddEventHandler('esx_policejob:getarrestedhard', function(playerheading, playercoords, playerlocation)
-	playerPed = GetPlayerPed(-1)
-	SetCurrentPedWeapon(playerPed, GetHashKey('WEAPON_UNARMED'), true) -- unarm player
-	local x, y, z   = table.unpack(playercoords + playerlocation * 1.0)
-	SetEntityCoords(GetPlayerPed(-1), x, y, z)
-	SetEntityHeading(GetPlayerPed(-1), playerheading)
-	Citizen.Wait(250)
-	LoadAnimDict('mp_arrest_paired')
-	TaskPlayAnim(GetPlayerPed(-1), 'mp_arrest_paired', 'crook_p2_back_right', 8.0, -8, 3750 , 2, 0, 0, 0, 0)
-	Citizen.Wait(3760)
-	IsHandcuffed = true
-	IsShackles = true
-	TriggerEvent('esx_policejob:hardcuff')
-	LoadAnimDict('mp_arresting')
-	TaskPlayAnim(GetPlayerPed(-1), 'mp_arresting', 'idle', 8.0, -8, -1, 49, 0.0, false, false, false)
-end)
-
 
 RegisterNetEvent('esx_policejob:unrestrain')
 AddEventHandler('esx_policejob:unrestrain', function()
@@ -1723,30 +1638,120 @@ AddEventHandler('esx_policejob:OutVehicle', function()
 	TaskLeaveVehicle(playerPed, vehicle, 16)
 end)
 
+function LoadAnimDict(dict)
+    while (not HasAnimDictLoaded(dict)) do
+        RequestAnimDict(dict)
+        Citizen.Wait(10)
+    end    
+end
+
+RegisterNetEvent('esx_policejob:getarrested')
+AddEventHandler('esx_policejob:getarrested', function(playerheading, playercoords, playerlocation)
+	playerPed = GetPlayerPed(-1)
+	SetCurrentPedWeapon(playerPed, GetHashKey('WEAPON_UNARMED'), true) -- unarm player
+	local x, y, z   = table.unpack(playercoords + playerlocation * 1.0)
+	SetEntityCoords(GetPlayerPed(-1), x, y, z)
+	SetEntityHeading(GetPlayerPed(-1), playerheading)
+	Citizen.Wait(250)
+	LoadAnimDict('mp_arrest_paired')
+	TaskPlayAnim(GetPlayerPed(-1), 'mp_arrest_paired', 'crook_p2_back_right', 8.0, -8, 3750 , 2, 0, 0, 0, 0)
+	Citizen.Wait(3760)
+	IsHandcuffed = true
+	IsShackles = false
+	TriggerEvent('esx_policejob:handcuff')
+	LoadAnimDict('mp_arresting')
+	TaskPlayAnim(GetPlayerPed(-1), 'mp_arresting', 'idle', 8.0, -8, -1, 49, 0.0, false, false, false)
+end)
+
+
+RegisterNetEvent('esx_policejob:doarrested')
+AddEventHandler('esx_policejob:doarrested', function()
+	Citizen.Wait(250)
+	LoadAnimDict('mp_arrest_paired')
+	TaskPlayAnim(GetPlayerPed(-1), 'mp_arrest_paired', 'cop_p2_back_right', 8.0, -8,3750, 2, 0, 0, 0, 0)
+	Citizen.Wait(3000)
+
+end) 
+
+RegisterNetEvent('esx_policejob:douncuffing')
+AddEventHandler('esx_policejob:douncuffing', function()
+	Citizen.Wait(250)
+	LoadAnimDict('mp_arresting')
+	TaskPlayAnim(GetPlayerPed(-1), 'mp_arresting', 'a_uncuff', 8.0, -8,-1, 2, 0, 0, 0, 0)
+	Citizen.Wait(5500)
+	ClearPedTasks(GetPlayerPed(-1))
+end)
+
+RegisterNetEvent('esx_policejob:getuncuffed')
+AddEventHandler('esx_policejob:getuncuffed', function(playerheading, playercoords, playerlocation)
+	local x, y, z   = table.unpack(playercoords + playerlocation * 1.0)
+	SetEntityCoords(GetPlayerPed(-1), x, y, z)
+	SetEntityHeading(GetPlayerPed(-1), playerheading)
+	Citizen.Wait(250)
+	LoadAnimDict('mp_arresting')
+	TaskPlayAnim(GetPlayerPed(-1), 'mp_arresting', 'b_uncuff', 8.0, -8,-1, 2, 0, 0, 0, 0)
+	Citizen.Wait(5500)
+	IsHandcuffed = false
+	IsShackles = false
+	TriggerEvent('esx_policejob:handcuff')
+	ClearPedTasks(GetPlayerPed(-1))
+end)
+
+RegisterNetEvent('esx_policejob:loose')
+AddEventHandler('esx_policejob:loose', function(playerheading, playercoords, playerlocation)
+	local x, y, z   = table.unpack(playercoords + playerlocation * 1.0)
+	SetEntityCoords(GetPlayerPed(-1), x, y, z)
+	SetEntityHeading(GetPlayerPed(-1), playerheading)
+	Citizen.Wait(250)
+	LoadAnimDict('mp_arresting')
+	TaskPlayAnim(GetPlayerPed(-1), 'mp_arresting', 'b_uncuff', 8.0, -8,-1, 2, 0, 0, 0, 0)
+	Citizen.Wait(5500)
+	IsHandcuffed = true
+	IsShackles = false
+	TriggerEvent('esx_policejob:handcuff')
+	ClearPedTasks(GetPlayerPed(-1))
+end)
+
 -- Handcuff
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
 		local playerPed = PlayerPedId()
 
-		if isHandcuffed then
+		if IsHandcuffed then
+			--DisableControlAction(0, 1, true) -- Disable pan
+			DisableControlAction(0, 2, true) -- Disable tilt
 			DisableControlAction(0, 24, true) -- Attack
 			DisableControlAction(0, 257, true) -- Attack 2
 			DisableControlAction(0, 25, true) -- Aim
 			DisableControlAction(0, 263, true) -- Melee Attack 1
+			--DisableControlAction(0, 32, true) -- W
+			--DisableControlAction(0, 34, true) -- A
+			--DisableControlAction(0, 31, true) -- S
+			--DisableControlAction(0, 30, true) -- D
+
 			DisableControlAction(0, 45, true) -- Reload
+			--DisableControlAction(0, 22, true) -- Jump
 			DisableControlAction(0, 44, true) -- Cover
 			DisableControlAction(0, 37, true) -- Select Weapon
 			DisableControlAction(0, 23, true) -- Also 'enter'?
+
 			DisableControlAction(0, 288,  true) -- Disable phone
 			DisableControlAction(0, 289, true) -- Inventory
 			DisableControlAction(0, 170, true) -- Animations
 			DisableControlAction(0, 167, true) -- Job
+
 			DisableControlAction(0, 0, true) -- Disable changing view
 			DisableControlAction(0, 26, true) -- Disable looking behind
 			DisableControlAction(0, 73, true) -- Disable clearing animation
 			DisableControlAction(2, 199, true) -- Disable pause screen
+
 			DisableControlAction(0, 59, true) -- Disable steering in vehicle
+			DisableControlAction(0, 71, true) -- Disable driving forward in vehicle
+			DisableControlAction(0, 72, true) -- Disable reversing in vehicle
+
+			DisableControlAction(2, 36, true) -- Disable going stealth
+
 			DisableControlAction(0, 47, true)  -- Disable weapon
 			DisableControlAction(0, 264, true) -- Disable melee
 			DisableControlAction(0, 257, true) -- Disable melee
@@ -1756,6 +1761,8 @@ Citizen.CreateThread(function()
 			DisableControlAction(0, 143, true) -- Disable melee
 			DisableControlAction(0, 75, true)  -- Disable exit vehicle
 			DisableControlAction(27, 75, true) -- Disable exit vehicle
+
+			DisableControlAction(0, 20, true) -- Z
 
 			if IsEntityPlayingAnim(playerPed, 'mp_arresting', 'idle', 3) ~= 1 then
 				ESX.Streaming.RequestAnimDict('mp_arresting', function()
@@ -1768,19 +1775,20 @@ Citizen.CreateThread(function()
 	end
 end)
 
--- Shackled
+
+-- shackles
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
 		local playerPed = PlayerPedId()
 
-		if isShackled then
+		if IsShackles then
 			DisableControlAction(0, 32, true) -- W
 			DisableControlAction(0, 34, true) -- A
 			DisableControlAction(0, 31, true) -- S
 			DisableControlAction(0, 30, true) -- D
 			DisableControlAction(0, 22, true) -- Jump
-			DisableControlAction(2, 36, true) -- Disable going stealth
+			DisableControlAction(0, 44, true) -- Cover
 
 			if IsEntityPlayingAnim(playerPed, 'mp_arresting', 'idle', 3) ~= 1 then
 				ESX.Streaming.RequestAnimDict('mp_arresting', function()
@@ -1791,6 +1799,25 @@ Citizen.CreateThread(function()
 			Citizen.Wait(500)
 		end
 	end
+end)
+
+
+RegisterNetEvent('esx_policejob:getarrestedhard')
+AddEventHandler('esx_policejob:getarrestedhard', function(playerheading, playercoords, playerlocation)
+	playerPed = GetPlayerPed(-1)
+	SetCurrentPedWeapon(playerPed, GetHashKey('WEAPON_UNARMED'), true) -- unarm player
+	local x, y, z   = table.unpack(playercoords + playerlocation * 1.0)
+	SetEntityCoords(GetPlayerPed(-1), x, y, z)
+	SetEntityHeading(GetPlayerPed(-1), playerheading)
+	Citizen.Wait(250)
+	LoadAnimDict('mp_arrest_paired')
+	TaskPlayAnim(GetPlayerPed(-1), 'mp_arrest_paired', 'crook_p2_back_right', 8.0, -8, 3750 , 2, 0, 0, 0, 0)
+	Citizen.Wait(3760)
+	IsHandcuffed = true
+	IsShackles = true
+	TriggerEvent('esx_policejob:hardcuff')
+	LoadAnimDict('mp_arresting')
+	TaskPlayAnim(GetPlayerPed(-1), 'mp_arresting', 'idle', 8.0, -8, -1, 49, 0.0, false, false, false)
 end)
 
 -- Create blips
