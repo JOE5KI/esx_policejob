@@ -13,7 +13,7 @@ local Keys = {
 }
 
 local PlayerData, CurrentActionData, handcuffTimer, dragStatus, blipsCops, currentTask, spawnedVehicles = {}, {}, {}, {}, {}, {}, {}
-local HasAlreadyEnteredMarker, isDead, isHandcuffed, isShackled hasAlreadyJoined, playerInService, isInShopMenu = false, false, false, false, false, false, false
+local HasAlreadyEnteredMarker, isDead, isHandcuffed, isShackles hasAlreadyJoined, playerInService, isInShopMenu = false, false, false, false, false, false, false
 local LastStation, LastPart, LastPartNum, LastEntity, CurrentAction, CurrentActionMsg
 dragStatus.isDragged = false
 ESX = nil
@@ -1530,6 +1530,7 @@ AddEventHandler('esx_policejob:unrestrain', function()
 	if isHandcuffed then
 		local playerPed = PlayerPedId()
 		isHandcuffed = false
+		isShackles = false
 
 		ClearPedSecondaryTask(playerPed)
 		SetEnableHandcuffs(playerPed, false)
@@ -1547,10 +1548,6 @@ end)
 
 RegisterNetEvent('esx_policejob:drag')
 AddEventHandler('esx_policejob:drag', function(copId)
-	if not isHandcuffed then
-		return
-	end
-
 	dragStatus.isDragged = not dragStatus.isDragged
 	dragStatus.CopId = copId
 end)
