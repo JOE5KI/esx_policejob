@@ -560,10 +560,18 @@ AddEventHandler('esx_policejob:message', function(target, msg)
 	TriggerClientEvent('esx:showNotification', target, msg)
 end)
 
+
 RegisterServerEvent('esx_policejob:requestarrest')
 AddEventHandler('esx_policejob:requestarrest', function(targetid, playerheading, playerCoords,  playerlocation)
     _source = source
     TriggerClientEvent('esx_policejob:getarrested', targetid, playerheading, playerCoords, playerlocation)
+    TriggerClientEvent('esx_policejob:doarrested', _source)
+end)
+
+RegisterServerEvent('esx_policejob:requestarresthard')
+AddEventHandler('esx_policejob:requestarresthard', function(targetid, playerheading, playerCoords,  playerlocation)
+    _source = source
+    TriggerClientEvent('esx_policejob:gethardarrested', targetid, playerheading, playerCoords, playerlocation)
     TriggerClientEvent('esx_policejob:doarrested', _source)
 end)
 
@@ -574,16 +582,3 @@ AddEventHandler('esx_policejob:requestrelease', function(targetid, playerheading
     TriggerClientEvent('esx_policejob:douncuffing', _source)
 end)
 
-RegisterServerEvent('esx_policejob:sc')
-AddEventHandler('esx_policejob:sc', function(targetid, playerheading, playerCoords,  playerlocation)
-    _source = source
-    TriggerClientEvent('esx_policejob:loose', targetid, playerheading, playerCoords, playerlocation)
-    TriggerClientEvent('esx_policejob:douncuffing', _source)
-end)
-
-RegisterServerEvent('esx_policejob:requesthard')
-AddEventHandler('esx_policejob:requesthard', function(targetid, playerheading, playerCoords,  playerlocation)
-    _source = source
-    TriggerClientEvent('esx_policejob:getarrestedhard', targetid, playerheading, playerCoords, playerlocation)
-    TriggerClientEvent('esx_policejob:doarrested', _source)
-end)
