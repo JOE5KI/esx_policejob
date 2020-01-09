@@ -16,4 +16,4 @@ Putting Multiple People in Vehicle
 
 
 # Bugs or Issues
-Please report to my discord: https://discord.gg/5v6KNRJ
+Please report to my discord: https://discord.gg/vjZqZFu
